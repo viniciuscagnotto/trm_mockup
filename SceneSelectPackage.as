@@ -13,8 +13,8 @@
 		private var itemDescription:TextField;
 		
 		private var totalKit:TextField;
-		private var qtdKits:TextField;
-		private var totalValueText:TextField;
+		public var qtdKits:TextField;
+		public var totalValueText:TextField;
 		private var totalKitValue:Number;
 		
 		private var nextButton:MovieClip;
