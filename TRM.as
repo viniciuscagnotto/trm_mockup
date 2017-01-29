@@ -54,7 +54,7 @@
 					this.sceneMain.visible = true;
 					break;
 				case STATE_SELECT_ITEMS:
-					this.sceneSelectItems.visible = true;
+					this.sceneSelectItems.visible = true;			
 					break;
 				case STATE_SELECT_PACKAGE:
 					break;
