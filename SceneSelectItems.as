@@ -31,18 +31,18 @@
 			currentItem = null;
 			
 			items = new <Item>[
-				(availableContainer.addChild(new Item(0, "BRINQUEDOS", false)) as Item),
-				(availableContainer.addChild(new Item(1, "Bolinha Frozen", true, "1 Bolinha pula pula temática do filme Frozen", 0.25, new PhotoFrozen())) as Item),
-				(availableContainer.addChild(new Item(2, "Bolinha Turma da Mônica", true, "1 Bolinha pula pula temática da Turma da Mônica", 0.25, new PhotoMonica())) as Item),
-				(availableContainer.addChild(new Item(3, "Miniatura Heróis", true, "1 Miniatura de super herói", 0.40, new PhotoMiniaturasHerois())) as Item),
-				(availableContainer.addChild(new Item(4, "Miniatura Sortida", true, "1 Miniatura infantil sortida", 0.20, new PhotoMiniaturas())) as Item),
-				(availableContainer.addChild(new Item(5, "GULOSEIMAS", false)) as Item),
-				(availableContainer.addChild(new Item(6, "Pirulitos", true, "2 Pirulitos", 0.30, new PhotoChicletes())) as Item),
-				(availableContainer.addChild(new Item(7, "Balas de Goma", true, "Pacotinho com 5 balas de goma", 0.40, new PhotoChicletes())) as Item),
-				(availableContainer.addChild(new Item(8, "Chicletes", true, "Pacotinho com 4 chicletes", 0.30, new PhotoChicletes())) as Item),
-				(availableContainer.addChild(new Item(9, "OUTROS", false)) as Item),
-				(availableContainer.addChild(new Item(10, "Chaveiro Heróis", true, "1 Chaveiro de super herói", 2.5, new PhotoChaveirosHerois())) as Item),
-				(availableContainer.addChild(new Item(11, "Adesivos", true, "1 cápsula com mini adesivos", 0.10, new PhotoAdesivos())) as Item)
+				(availableContainer.addChild(new Item(0, Item.TYPE_ITEM, "BRINQUEDOS", false)) as Item),
+				(availableContainer.addChild(new Item(1, Item.TYPE_ITEM, "Bolinha Frozen", true, "1 Bolinha pula pula temática do filme Frozen", 0.25, new PhotoFrozen())) as Item),
+				(availableContainer.addChild(new Item(2, Item.TYPE_ITEM, "Bolinha Turma da Mônica", true, "1 Bolinha pula pula temática da Turma da Mônica", 0.25, new PhotoMonica())) as Item),
+				(availableContainer.addChild(new Item(3, Item.TYPE_ITEM, "Miniatura Heróis", true, "1 Miniatura de super herói", 0.40, new PhotoMiniaturasHerois())) as Item),
+				(availableContainer.addChild(new Item(4, Item.TYPE_ITEM, "Miniatura Sortida", true, "1 Miniatura infantil sortida", 0.20, new PhotoMiniaturas())) as Item),
+				(availableContainer.addChild(new Item(5, Item.TYPE_ITEM, "GULOSEIMAS", false)) as Item),
+				(availableContainer.addChild(new Item(6, Item.TYPE_ITEM, "Pirulitos", true, "2 Pirulitos", 0.30, new PhotoChicletes())) as Item),
+				(availableContainer.addChild(new Item(7, Item.TYPE_ITEM, "Balas de Goma", true, "Pacotinho com 5 balas de goma", 0.40, new PhotoChicletes())) as Item),
+				(availableContainer.addChild(new Item(8, Item.TYPE_ITEM, "Chicletes", true, "Pacotinho com 4 chicletes", 0.30, new PhotoChicletes())) as Item),
+				(availableContainer.addChild(new Item(9, Item.TYPE_ITEM, "OUTROS", false)) as Item),
+				(availableContainer.addChild(new Item(10, Item.TYPE_ITEM, "Chaveiro Heróis", true, "1 Chaveiro de super herói", 2.5, new PhotoChaveirosHerois())) as Item),
+				(availableContainer.addChild(new Item(11, Item.TYPE_ITEM, "Adesivos", true, "1 cápsula com mini adesivos", 0.10, new PhotoAdesivos())) as Item)
 			];
 			
 			selectedItems = new <Item>[];
@@ -126,11 +126,12 @@
 			updateValue();
 		}
 		
-		private function updateValue():void{
+		public function updateValue():void{
 			var totalValue:Number = 0;
 			for(var i:int = 0; i < UserInfo.SELECTED_ITEMS.length; i++)
 				totalValue += UserInfo.SELECTED_ITEMS[i] ? items[i].value : 0;
 			
+			totalValue += TRM.self.sceneSelectPackage.items[UserInfo.SELECTED_PACKAGE].value;
 			totalText.text = "KIT R$" + (int(totalValue*100)/100);
 		}
 		
@@ -174,6 +175,28 @@
 			for(i = 0; i < UserInfo.SELECTED_ITEMS.length; i++)
 				if(UserInfo.SELECTED_ITEMS[i]) return;
 			nextButton.visible = false;
+		}
+		
+		private function clearSelectedItems():void
+		{
+			for(var i:int = 0; i < selectedItems.length;i++)
+			{
+				var item:Item = selectedItems[i];
+				item.visible = false;
+				item.index = -1;
+				item.itemName = "";
+			}
+				
+		}
+		
+		public function reset():void{
+			unselectAll();
+			removePhoto();
+			clearSelectedItems();
+			currentItem = null;
+			totalText.text = "KIT R$0";
+			itemName.text = "";
+			itemDescription.text = "";
 		}
 
 	}

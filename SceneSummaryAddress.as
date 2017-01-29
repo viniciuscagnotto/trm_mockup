@@ -6,6 +6,11 @@
 		public function SceneSummaryAddress() {
 			
 		}
+		
+		public function update():void
+		{
+			
+		}
 
 	}
 	
