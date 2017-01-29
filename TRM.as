@@ -33,6 +33,8 @@
 			this.scenePayment = this.addChild(new ScenePayment()) as ScenePayment;
 			this.sceneOrderList = this.addChild(new SceneOrdersList()) as SceneOrdersList;
 			
+			UserInfo.init(this.sceneSelectItems.numItems);
+			
 			state = STATE_MAIN;
 		}
 		
@@ -52,6 +54,7 @@
 					this.sceneMain.visible = true;
 					break;
 				case STATE_SELECT_ITEMS:
+					this.sceneSelectItems.visible = true;
 					break;
 				case STATE_SELECT_PACKAGE:
 					break;
@@ -68,6 +71,11 @@
 		
 		public function reset(full:Boolean = false):void{
 			this.sceneMain.visible = false;
+			this.sceneSelectItems.visible = false;
+			this.sceneSelectPackage.visible = false;
+			this.sceneSummaryAddress.visible = false;
+			this.scenePayment.visible = false;
+			this.sceneOrderList.visible = false;
 			
 			if(full)
 			{
